@@ -106,7 +106,6 @@ defmodule DAL do
   then behaves just like `c:Ecto.Repo.get_by!/2`
   """
   def all(queryable, opts \\ []) do
-    IO.inspect(queryable, label: "ALL")
     execute(queryable, :all, [opts])
   end
 
