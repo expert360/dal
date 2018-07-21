@@ -1,6 +1,7 @@
 # Dal
 
 [![CircleCI](https://circleci.com/gh/expert360/dal/tree/master.svg?style=svg)](https://circleci.com/gh/expert360/dal/tree/master)
+[![Inline docs](http://inch-ci.org/github/expert360/dal.svg)](http://inch-ci.org/github/expert360/dal)
 
 **TODO: Add description**
 
