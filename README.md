@@ -1,5 +1,7 @@
 # Dal
 
+[![CircleCI](https://circleci.com/gh/expert360/dal/tree/master.svg?style=svg)](https://circleci.com/gh/expert360/dal/tree/master)
+
 **TODO: Add description**
 
 ## Installation
