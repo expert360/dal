@@ -26,6 +26,7 @@ defmodule Dal.MixProject do
       {:ex_doc, "~> 0.18.4", only: :dev, runtime: false},
       {:postgrex, "~> 0.13.5", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.6.0", only: :dev, runtime: false},
+      {:inch_ex, only: :docs},
     ]
   end
 end

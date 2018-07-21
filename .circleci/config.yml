@@ -31,3 +31,8 @@ jobs:
       - run: mix local.rebar --force
       - run: mix deps.get
       - run: mix test
+      - run:
+          name: Running Inch CI documentation tests
+          command: |
+            MIX_ENV=docs mix deps.get
+            MIX_ENV=docs mix inch.report
