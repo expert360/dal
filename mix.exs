@@ -8,7 +8,8 @@ defmodule Dal.MixProject do
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      consolidate_protocols: Mix.env != :test
+      consolidate_protocols: Mix.env != :test,
+      test_coverage: [tool: ExCoveralls],
     ]
   end
 
@@ -27,6 +28,7 @@ defmodule Dal.MixProject do
       {:postgrex, "~> 0.13.5", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.6.0", only: :dev, runtime: false},
       {:inch_ex, only: :docs},
+      {:excoveralls, "~> 0.9.1", only: :test}
     ]
   end
 end

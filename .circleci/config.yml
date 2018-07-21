@@ -30,9 +30,13 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix deps.get
-      - run: mix test
+      - run: mix do compile --warnings-as-errors, coveralls.json
       - run:
           name: Running Inch CI documentation tests
           command: |
             MIX_ENV=docs mix deps.get
             MIX_ENV=docs mix inch.report
+      - run:
+          name: Uploade Code Coverage
+          command: |
+            bash <(curl -s https://codecov.io/bash)
