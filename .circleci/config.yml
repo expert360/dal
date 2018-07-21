@@ -9,12 +9,25 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/postgres:9.4
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_DB: circle_test
+      POSTGRES_HOST: localhost
 
     working_directory: ~/repo
     steps:
       - checkout
-
-      # specify any bash command here prefixed with `run: `
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgres && exit 1
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
       - run: mix deps.get
-      - run: mix ecto.create
       - run: mix test
