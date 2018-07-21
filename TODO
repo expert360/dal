@@ -1,0 +1,10 @@
+- DAL.all
+- DAL.all_ids
+- mutations
+- MySQL
+- Cross DB
+- Add foreign keys to seeds
+
+- Analysing queries for cross database execution
+  - By association patterns using preload (a bit hard)
+  - By join (really hard)
