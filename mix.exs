@@ -4,11 +4,14 @@ defmodule Dal.MixProject do
   def project do
     [
       app: :dal,
+      name: "DAL",
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      consolidate_protocols: Mix.env != :test,
+      package: package(),
+      description: description(),
+      consolidate_protocols: false,
       test_coverage: [tool: ExCoveralls],
     ]
   end
@@ -20,6 +23,10 @@ defmodule Dal.MixProject do
     ]
   end
 
+  defp description do
+    "Ecto proxy to simplify querying across multiple separate databases"
+  end
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -29,6 +36,15 @@ defmodule Dal.MixProject do
       {:mix_test_watch, "~> 0.6.0", only: :dev, runtime: false},
       {:inch_ex, only: :docs},
       {:excoveralls, "~> 0.9.1", only: :test}
+    ]
+  end
+
+  defp package do
+    [
+      files: ~w(lib mix.exs README.md LICENSE.md),
+      links: %{"GitHub" => "https://github.com/expert360/dal"},
+      licenses: ["Apache 2.0"],
+      maintainers: ["Dan Draper"],
     ]
   end
 end
