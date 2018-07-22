@@ -2,7 +2,7 @@
 
 ![CircleCI](https://img.shields.io/circleci/project/github/expert360/dal.svg)
 ![Codecov](https://img.shields.io/codecov/c/github/expert360/dal.svg)
-![Hex.pm](https://img.shields.io/hexpm/expert360/dal.svg)
+![Hex.pm](https://img.shields.io/hexpm/dt/dal.svg)
 ![Hex.pm](https://img.shields.io/hexpm/v/dal.svg)
 [![Inline docs](http://inch-ci.org/github/expert360/dal.svg)](http://inch-ci.org/github/expert360/dal)
 
