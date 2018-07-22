@@ -1,8 +1,11 @@
 # Dal
 
-[![CircleCI](https://circleci.com/gh/expert360/dal/tree/master.svg?style=svg)](https://circleci.com/gh/expert360/dal/tree/master)
+![CircleCI](https://img.shields.io/circleci/project/github/expert360/dal.svg)
+![Codecov](https://img.shields.io/codecov/c/github/expert360/dal.svg)
+![Hex.pm](https://img.shields.io/hexpm/expert360/dal.svg)
+![Hex.pm](https://img.shields.io/hexpm/v/dal.svg)
 [![Inline docs](http://inch-ci.org/github/expert360/dal.svg)](http://inch-ci.org/github/expert360/dal)
-[![codecov](https://codecov.io/gh/expert360/dal/branch/master/graph/badge.svg)](https://codecov.io/gh/expert360/dal)
+
 
 **TODO: Add description**
 
