@@ -155,6 +155,26 @@ defmodule DAL do
     execute(struct_or_changeset, :insert!, [opts])
   end
 
+  @spec insert_or_update(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
+          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
+  @doc """
+  Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
+  then behaves just like `c:Ecto.Repo.insert_or_update/2`
+  """
+  def insert_or_update(struct_or_changeset, opts \\ []) do
+    execute(struct_or_changeset, :insert_or_update, [opts])
+  end
+
+  @spec insert_or_update!(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
+          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
+  @doc """
+  Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
+  then behaves just like `c:Ecto.Repo.insert_or_update!/2`
+  """
+  def insert_or_update!(struct_or_changeset, opts \\ []) do
+    execute(struct_or_changeset, :insert_or_update!, [opts])
+  end
+
   @spec delete(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
           {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
