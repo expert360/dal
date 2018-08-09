@@ -58,7 +58,7 @@ following this guide:
 6. If everything looks good, push to your fork:
 
   ```bash
-  git push origin fix-mailchimp-pricing-bug
+  git push origin fix-nasty-bug
   ```
 
 7. [Submit a pull request.](https://help.github.com/articles/creating-a-pull-request)
