@@ -122,22 +122,4 @@ defmodule DALTest.Case do
 
     %{genres: genres}
   end
-
-  def upsert_genre(_) do
-    {2, genres} =
-      Genre
-      |> Repo.insert_or_update([
-        %{name: "Thrash"},
-        %{name: "Pop"},
-      ], returning: true)
-
-    {2, genres} =
-      Genre
-      |> Repo.insert_or_update([
-        %{name: "Thrash"},
-        %{name: "Pop"},
-      ], returning: true)
-
-    %{genres: genres}
-  end
 end
