@@ -6,12 +6,7 @@
 ![Hex.pm](https://img.shields.io/hexpm/v/dal.svg)
 [![Inline docs](http://inch-ci.org/github/expert360/dal.svg)](http://inch-ci.org/github/expert360/dal)
 
-Global Data Access Layer to replace direct use of `Ecto.Repo` and other data services.
-
-The DAL performs two core functions:
-
-1. Provides an abstraction for other data repositories
-2. Provides a set of macros representing all available data types that can be used in services
+The Data Access Layer performs two core functions provides an abstraction for other data repositories
 
 ## Installation
 
