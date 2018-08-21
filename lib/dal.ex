@@ -41,204 +41,238 @@ defmodule DAL do
   end
   """
 
+  @behaviour DAL.Behaviour
+
   alias DAL.Repo.Discovery
   alias Ecto.Multi
   import Ecto.Query
 
-  @spec get(queryable :: Ecto.Queryable.t(), id :: term, opts :: Keyword.t()) ::
-          Ecto.Schema.t() | nil | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.get/3`
   """
+  @spec get(
+              queryable :: Ecto.Queryable.t(),
+              id :: term,
+              opts :: Keyword.t()
+            ) :: Ecto.Schema.t() | nil | no_return
   def get(queryable, id, opts \\ []) do
     execute(queryable, :get, [id, opts])
   end
 
-  @spec get!(queryable :: Ecto.Queryable.t(), id :: term, opts :: Keyword.t()) ::
-          Ecto.Schema.t() | nil | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.get!/3`
   """
+  @spec get!(
+              queryable :: Ecto.Queryable.t(),
+              id :: term,
+              opts :: Keyword.t()
+            ) :: Ecto.Schema.t() | nil | no_return
   def get!(queryable, id, opts \\ []) do
     execute(queryable, :get!, [id, opts])
   end
 
-  @spec get_by(queryable :: Ecto.Queryable.t(), clauses :: Keyword.t() | map, opts :: Keyword.t()) ::
-          Ecto.Schema.t() | nil | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.get_by/3`
   """
+  @spec get_by(
+              queryable :: Ecto.Queryable.t(),
+              clauses :: Keyword.t() | map,
+              opts :: Keyword.t()
+            ) :: Ecto.Schema.t() | nil | no_return
   def get_by(queryable, params, opts \\ []) do
     execute(queryable, :get_by, [params, opts])
   end
 
-  @spec get_by!(
-          queryable :: Ecto.Queryable.t(),
-          clauses :: Keyword.t() | map,
-          opts :: Keyword.t()
-        ) :: Ecto.Schema.t() | nil | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.get_by!/3`
   """
+  @spec get_by!(
+              queryable :: Ecto.Queryable.t(),
+              clauses :: Keyword.t() | map,
+              opts :: Keyword.t()
+            ) :: Ecto.Schema.t() | nil | no_return
   def get_by!(queryable, params, opts \\ []) do
     execute(queryable, :get_by!, [params, opts])
   end
 
-  @spec one(queryable :: Ecto.Query.t(), opts :: Keyword.t()) ::
-          Ecto.Schema.t()
-          | nil
-          | no_return()
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.one!/2`
   """
+  @spec one(
+          queryable :: Ecto.Query.t(),
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | nil | no_return()
   def one(queryable, opts \\ []) do
     execute(queryable, :one, [opts])
   end
 
-  @spec all(queryable :: Ecto.Query.t(), opts :: Keyword.t()) :: [Ecto.Schema.t()] | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.get_by!/2`
   """
+  @spec all(queryable :: Ecto.Query.t(), opts :: Keyword.t()) :: [Ecto.Schema.t()] | no_return
   def all(queryable, opts \\ []) do
     execute(queryable, :all, [opts])
   end
 
+  @doc """
+  Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
+  then behaves just like `c:Ecto.Repo.aggregate/4`
+  """
   @spec aggregate(
           queryable :: Ecto.Query.t(),
           aggregate :: :avg | :count | :max | :min | :sum,
           field :: atom(),
           opts :: Keyword.t()
         ) :: [Ecto.Schema.t()] | no_return
-  @doc """
-  Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
-  then behaves just like `c:Ecto.Repo.aggregate/4`
-  """
   def aggregate(queryable, aggregate, field, opts \\ []) do
     execute(queryable, :aggregate, [aggregate, field, opts])
   end
 
-  @spec all_ids(queryable :: Ecto.Query.t(), id_list :: list(term), opts :: Keyword.t()) ::
-          [Ecto.Schema.t()] | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   and then constrains the results to the given list of ids before passing to `all/2`.
   """
+  @spec all_ids(
+          queryable :: Ecto.Query.t(),
+          id_list :: list(term),
+          opts :: Keyword.t()
+        ) :: [Ecto.Schema.t()] | no_return
   def all_ids(queryable, id_list, opts \\ []) do
     queryable
     |> where([q], q.id in ^id_list)
     |> all(opts)
   end
 
-  @spec insert(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.insert/2`
   """
+  @spec insert(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def insert(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :insert, [opts])
   end
 
-  @spec insert!(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          Ecto.Schema.t() | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.insert!/2`
   """
+  @spec insert!(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | no_return
   def insert!(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :insert!, [opts])
   end
 
-  @spec insert_or_update(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.insert_or_update/2`
   """
+  @spec insert_or_update(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def insert_or_update(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :insert_or_update, [opts])
   end
 
-  @spec insert_or_update!(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.insert_or_update!/2`
   """
+  @spec insert_or_update!(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def insert_or_update!(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :insert_or_update!, [opts])
   end
 
-  @spec delete(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.delete/2`
   """
+  @spec delete(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def delete(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :delete, [opts])
   end
 
-  @spec delete_all(queryable :: Ecto.Queryable.t(), opts :: Keyword.t()) ::
-          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.delete_all/2`
   """
+  @spec delete_all(
+          queryable :: Ecto.Queryable.t(),
+          opts :: Keyword.t()
+        ) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def delete_all(queryable, opts \\ []) do
     execute(queryable, :delete_all, [opts])
   end
 
-  @spec delete!(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          Ecto.Schema.t() | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.delete!/2`
   """
+  @spec delete!(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | no_return
   def delete!(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :delete!, [opts])
   end
 
-  @spec update(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.update/2`
   """
+  @spec update(
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def update(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :update, [opts])
   end
 
-  @spec update!(struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(), opts :: Keyword.t()) ::
-          Ecto.Schema.t() | no_return
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.update!/2`
   """
+  @spec update!(
+    struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+    opts :: Keyword.t()
+  ) :: Ecto.Schema.t() | no_return
   def update!(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :update!, [opts])
   end
 
-  @spec stream(queryable :: Ecto.Query.t(), opts :: Keyword.t()) :: Enum.t()
   @doc """
   Delegates to an appropriate repo determined by `DAL.Repo.Discoverable`
   then behaves just like `c:Ecto.Repo.stream/2`
   """
+  @spec stream(queryable :: Ecto.Query.t(), opts :: Keyword.t()) :: Enum.t()
   def stream(queryable, opts \\ []) do
     execute(queryable, :stream, [opts])
   end
 
-  @spec insert_bulk(changesets :: [Ecto.Changeset.t()], opts: list()) ::
-          {:ok, [map()]} | {:error, Ecto.Changeset.t()}
   @doc """
   Helper function that inserts a list of `Ecto.Changeset` via `Ecto.Multi`, wrapping it in a transaction.'
   """
+  @spec insert_bulk(
+    changesets :: [Ecto.Changeset.t()],
+    opts: list()
+  ) :: {:ok, [map()]} | {:error, Ecto.Changeset.t()}
   def insert_bulk(changesets, opts \\ []) do
     changesets
     |> Enum.with_index()
@@ -269,7 +303,6 @@ defmodule DAL do
   Wrapper over `Ecto.transaction` to handle `Ecto.Multi` and a standard `Ecto.Query`, built in repo discovery.
   """
   def transaction(queryable, opts \\ [])
-
   def transaction(%Multi{} = multi, opts) do
     multi
     |> Multi.to_list()
@@ -284,20 +317,19 @@ defmodule DAL do
     end)
     |> apply(:transaction, [multi, opts])
   end
-
-  def transaction(queryable, _opts) when is_function(queryable),
-    do: raise(ArgumentError, "Can't use DAL discovery with a function argument")
-
+  def transaction(queryable, _opts) when is_function(queryable) do
+    raise(ArgumentError, "Can't use DAL discovery with a function argument")
+  end
   def transaction(queryable, opts) do
     queryable
     |> discover()
     |> apply(:transaction, [queryable, opts])
   end
 
-  @spec discover(queryable :: Ecto.Query.t() | Ecto.Changeset.t()) :: Ecto.Repo.t()
   @doc """
   Convenience function for using repo discovery.
   """
+  @spec discover(queryable :: Ecto.Query.t() | Ecto.Changeset.t()) :: Ecto.Repo.t()
   def discover(%Ecto.Changeset{data: data}) do
     Discovery.fetch(data)
   end
