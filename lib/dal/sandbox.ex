@@ -20,7 +20,7 @@ defmodule DAL.Sandbox do
            :ok <- Sandbox.mode(repo, {:shared, self()}) do
         :ok
       else
-        :error
+        _ -> :error
       end
     end)
   end
