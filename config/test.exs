@@ -6,4 +6,4 @@ config :dal, DALTest.Repo,
   password: System.get_env("POSTGRES_PASS"),
   hostname: System.get_env("POSTGRES_HOST"),
   pool: Ecto.Adapters.SQL.Sandbox,
-  loggers: false
+  log: warn
