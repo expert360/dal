@@ -30,9 +30,9 @@ defmodule Dal.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 3.0"},
+      {:ecto_sql, "~> 3.0"},
       {:ex_doc, "~> 0.18.4", only: :dev, runtime: false},
-      {:postgrex, "~> 0.13.5", only: [:dev, :test]},
+      {:postgrex, "~> 0.13", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.6.0", only: :dev, runtime: false},
       {:inch_ex, only: :docs},
       {:excoveralls, "~> 0.9.1", only: :test}
