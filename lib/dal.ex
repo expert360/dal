@@ -52,10 +52,10 @@ defmodule DAL do
   then behaves just like `c:Ecto.Repo.get/3`
   """
   @spec get(
-              queryable :: Ecto.Queryable.t(),
-              id :: term,
-              opts :: Keyword.t()
-            ) :: Ecto.Schema.t() | nil | no_return
+          queryable :: Ecto.Queryable.t(),
+          id :: term,
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | nil | no_return
   def get(queryable, id, opts \\ []) do
     execute(queryable, :get, [id, opts])
   end
@@ -65,10 +65,10 @@ defmodule DAL do
   then behaves just like `c:Ecto.Repo.get!/3`
   """
   @spec get!(
-              queryable :: Ecto.Queryable.t(),
-              id :: term,
-              opts :: Keyword.t()
-            ) :: Ecto.Schema.t() | nil | no_return
+          queryable :: Ecto.Queryable.t(),
+          id :: term,
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | nil | no_return
   def get!(queryable, id, opts \\ []) do
     execute(queryable, :get!, [id, opts])
   end
@@ -78,10 +78,10 @@ defmodule DAL do
   then behaves just like `c:Ecto.Repo.get_by/3`
   """
   @spec get_by(
-              queryable :: Ecto.Queryable.t(),
-              clauses :: Keyword.t() | map,
-              opts :: Keyword.t()
-            ) :: Ecto.Schema.t() | nil | no_return
+          queryable :: Ecto.Queryable.t(),
+          clauses :: Keyword.t() | map,
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | nil | no_return
   def get_by(queryable, params, opts \\ []) do
     execute(queryable, :get_by, [params, opts])
   end
@@ -91,10 +91,10 @@ defmodule DAL do
   then behaves just like `c:Ecto.Repo.get_by!/3`
   """
   @spec get_by!(
-              queryable :: Ecto.Queryable.t(),
-              clauses :: Keyword.t() | map,
-              opts :: Keyword.t()
-            ) :: Ecto.Schema.t() | nil | no_return
+          queryable :: Ecto.Queryable.t(),
+          clauses :: Keyword.t() | map,
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | nil | no_return
   def get_by!(queryable, params, opts \\ []) do
     execute(queryable, :get_by!, [params, opts])
   end
@@ -250,9 +250,9 @@ defmodule DAL do
   then behaves just like `c:Ecto.Repo.update!/2`
   """
   @spec update!(
-    struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
-    opts :: Keyword.t()
-  ) :: Ecto.Schema.t() | no_return
+          struct_or_changeset :: Ecto.Schema.t() | Ecto.Changeset.t(),
+          opts :: Keyword.t()
+        ) :: Ecto.Schema.t() | no_return
   def update!(struct_or_changeset, opts \\ []) do
     execute(struct_or_changeset, :update!, [opts])
   end
@@ -270,9 +270,9 @@ defmodule DAL do
   Helper function that inserts a list of `Ecto.Changeset` via `Ecto.Multi`, wrapping it in a transaction.'
   """
   @spec insert_bulk(
-    changesets :: [Ecto.Changeset.t()],
-    opts: list()
-  ) :: {:ok, [map()]} | {:error, Ecto.Changeset.t()}
+          changesets :: [Ecto.Changeset.t()],
+          opts: list()
+        ) :: {:ok, [map()]} | {:error, Ecto.Changeset.t()}
   def insert_bulk(changesets, opts \\ []) do
     changesets
     |> Enum.with_index()
@@ -303,6 +303,7 @@ defmodule DAL do
   Wrapper over `Ecto.transaction` to handle `Ecto.Multi` and a standard `Ecto.Query`, built in repo discovery.
   """
   def transaction(queryable, opts \\ [])
+
   def transaction(%Multi{} = multi, opts) do
     multi
     |> Multi.to_list()
@@ -317,9 +318,11 @@ defmodule DAL do
     end)
     |> apply(:transaction, [multi, opts])
   end
+
   def transaction(queryable, _opts) when is_function(queryable) do
     raise(ArgumentError, "Can't use DAL discovery with a function argument")
   end
+
   def transaction(queryable, opts) do
     queryable
     |> discover()
@@ -329,17 +332,27 @@ defmodule DAL do
   @doc """
   Convenience function for using repo discovery.
   """
-  @spec discover(queryable :: Ecto.Query.t() | Ecto.Changeset.t()) :: Ecto.Repo.t()
+  @spec discover(
+          queryable ::
+            nil | Ecto.Query.t() | Ecto.Changeset.t() | Ecto.Schema.t() | [Ecto.Schema.t()]
+        ) :: Ecto.Repo.t()
   def discover(%Ecto.Changeset{data: data}) do
-    Discovery.fetch(data)
+    discover(data)
   end
+
+  def discover(structs) when is_list(structs) do
+    structs |> Enum.find(& &1) |> discover()
+  end
+
+  def discover(nil), do: nil
 
   def discover(queryable) do
     Discovery.fetch(queryable)
   end
 
   def preload(struct_or_structs_or_nil, preloads, opts \\ []) do
-    Ecto.Repo.Preloader.preload(struct_or_structs_or_nil, DAL, preloads, opts)
+    repo = discover(struct_or_structs_or_nil)
+    Ecto.Repo.Preloader.preload(struct_or_structs_or_nil, repo, preloads, opts)
   end
 
   defp execute(target, function, args) do

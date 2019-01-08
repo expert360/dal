@@ -12,7 +12,7 @@ defmodule Dal.MixProject do
       package: package(),
       description: description(),
       consolidate_protocols: false,
-      test_coverage: [tool: ExCoveralls],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -30,11 +30,11 @@ defmodule Dal.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 2.2"},
-      {:ex_doc, "~> 0.18.4", only: :dev, runtime: false},
-      {:postgrex, "~> 0.13.5", only: [:dev, :test]},
+      {:ecto_sql, "~> 3.0"},
+      {:ex_doc, "~> 0.18", only: :dev, runtime: false},
+      {:postgrex, "~> 0.13", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.6.0", only: :dev, runtime: false},
-      {:inch_ex, only: :docs},
+      {:inch_ex, github: "rrrene/inch_ex", only: :docs},
       {:excoveralls, "~> 0.9.1", only: :test}
     ]
   end
@@ -44,7 +44,7 @@ defmodule Dal.MixProject do
       files: ~w(lib mix.exs README.md LICENSE.md),
       links: %{"GitHub" => "https://github.com/expert360/dal"},
       licenses: ["Apache 2.0"],
-      maintainers: ["Dan Draper"],
+      maintainers: ["Dan Draper"]
     ]
   end
 end

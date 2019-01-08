@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # specify the version here
-      - image: circleci/elixir:1.6
+      - image: circleci/elixir:1.7
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -16,6 +16,7 @@ jobs:
       POSTGRES_DB: circle_test
       POSTGRES_USER: root
       POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
       MIX_ENV: test
 
     working_directory: ~/repo
@@ -34,7 +35,7 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix deps.get
-      - run: mix do compile --warnings-as-errors, coveralls.json
+      - run: mix do compile --docs --warnings-as-errors, coveralls.json
       - run:
           name: Running Inch CI documentation tests
           command: |
