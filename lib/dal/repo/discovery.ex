@@ -15,18 +15,21 @@ defmodule DAL.Repo.Discovery do
   Find the appropriate Repo (based on the `DAL.Repo.Discoverable` protocol)
   for the given `Ecto.Queryable` (a struct or a schema) or `Ecto.Changeset`.
   """
-  @spec fetch(Ecto.Queryable.t | Ecto.Changeset.t) :: Ecto.Repo.t
+  @spec fetch(Ecto.Queryable.t() | Ecto.Changeset.t()) :: Ecto.Repo.t()
   def fetch(target) when is_atom(target) do
     target
     |> struct
     |> fetch
   end
+
   def fetch(%Ecto.Changeset{data: target}) do
     fetch(target)
   end
+
   def fetch(%Ecto.Query{from: {_source, target}}) do
     fetch(target)
   end
+
   def fetch(target) do
     Discoverable.repo(target)
   end
