@@ -4,12 +4,6 @@ defmodule DALTest.Preload do
 
   alias DALTest.Band
 
-  describe "Preloading for nil" do
-    test "it returns nil" do
-      assert DAL.preload(nil, :something) == nil
-    end
-  end
-
   describe "Preloading belongs_to for single parent" do
     setup [
       :create_genre,
@@ -20,7 +14,6 @@ defmodule DALTest.Preload do
       %{genre: loaded} =
         Band
         |> DAL.get(band.id)
-        |> IO.inspect()
         |> DAL.preload(:genre)
 
       assert loaded == genre
@@ -29,7 +22,7 @@ defmodule DALTest.Preload do
     test "loads all associated records", %{genre: genre} do
       loaded =
         Band
-        |> DAL.all()
+        |> DAL.all
         |> DAL.preload(:genre)
         |> Enum.map(fn band ->
           band.genre
@@ -48,7 +41,7 @@ defmodule DALTest.Preload do
     test "loads all associated records", %{genres: genres} do
       loaded =
         Band
-        |> DAL.all()
+        |> DAL.all
         |> DAL.preload(:genre)
         |> Enum.map(fn band ->
           band.genre
@@ -65,7 +58,8 @@ defmodule DALTest.Preload do
     ]
 
     test "loads the associated records for the band",
-         %{band: band, albums: albums} do
+      %{band: band, albums: albums} do
+
       %{albums: loaded} =
         Band
         |> DAL.get(band.id)
