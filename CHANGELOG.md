@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.0 2019-01-08
+
+* Bump to Ecto 3.0
+
 ## v0.2.0 2018-11-15
 
 * Provided `DAL.Repo` helpers to return all DAL implementations

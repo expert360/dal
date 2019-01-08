@@ -16,7 +16,7 @@ by adding `dal` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:dal, "~> 0.1.0"}
+    {:dal, "~> 0.3.0"}
   ]
 end
 ```
