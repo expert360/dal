@@ -26,7 +26,7 @@ defmodule DAL.Repo.Discovery do
     fetch(target)
   end
 
-  def fetch(%Ecto.Query{from: {_source, target}}) do
+  def fetch(%Ecto.Query{from: %Ecto.Query.FromExpr{source: {_, target}}}) do
     fetch(target)
   end
 
