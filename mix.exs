@@ -35,7 +35,7 @@ defmodule Dal.MixProject do
       {:postgrex, "~> 0.13", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.9.0", only: :dev, runtime: false},
       {:inch_ex, github: "rrrene/inch_ex", only: :docs},
-      {:excoveralls, "~> 0.9.1", only: :test}
+      {:excoveralls, "~> 0.11.0", only: :test}
     ]
   end
 
