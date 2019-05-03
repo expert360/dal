@@ -33,7 +33,7 @@ defmodule Dal.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:ex_doc, "~> 0.18", only: :dev, runtime: false},
       {:postgrex, "~> 0.13", only: [:dev, :test]},
-      {:mix_test_watch, "~> 0.6.0", only: :dev, runtime: false},
+      {:mix_test_watch, "~> 0.9.0", only: :dev, runtime: false},
       {:inch_ex, github: "rrrene/inch_ex", only: :docs},
       {:excoveralls, "~> 0.9.1", only: :test}
     ]
